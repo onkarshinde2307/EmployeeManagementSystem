@@ -101,24 +101,7 @@ git clone https://github.com/onkarshinde2307/EmployeeManagementSystem.git
 
 6. Build and Run the project.
 
----
-
-## Screenshots
-
-### Login
-
-(Add Screenshot)
-
-### Employee List
-
-(Add Screenshot)
-
-### Create Employee
-
-(Add Screenshot)
-
----
-
+--- 
 ## Design Pattern Used
 
 - Repository Pattern
