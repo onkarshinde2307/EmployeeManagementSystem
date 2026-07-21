@@ -1,0 +1,160 @@
+﻿@model PagedList.IPagedList<EmployeeManagementSystem.Models.Employee>
+
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Employee List";
+}
+
+<h2>Employee List</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+@using (Html.BeginForm("Index", "Employee", FormMethod.Get))
+{
+    <div class="row mb-3">
+
+        <div class="col-md-4">
+            @Html.TextBox("search", ViewBag.CurrentSearch as string,
+                new
+                {
+                    @class = "form-control",
+                    placeholder = "Search Employee..."
+                })
+        </div>
+
+        <div class="col-md-2">
+            <input type="submit"
+                   value="Search"
+                   class="btn btn-primary" />
+        </div>
+
+        <div class="col-md-6 text-end">
+            @Html.ActionLink("➕ Add New Employee",
+                "Create",
+                null,
+                new { @class = "btn btn-success" })
+        </div>
+
+    </div>
+}
+
+<table class="table table-bordered table-hover table-striped">
+
+    <thead class="table-dark">
+
+        <tr>
+
+            <th>Id</th>
+
+            <th>
+                @Html.ActionLink("Name", "Index",
+                    new
+                    {
+                        sortOrder = ViewBag.NameSort,
+                        search = ViewBag.CurrentSearch
+                    })
+            </th>
+
+            <th>Department</th>
+
+            <th>
+                @Html.ActionLink("Salary", "Index",
+                    new
+                    {
+                        sortOrder = ViewBag.SalarySort,
+                        search = ViewBag.CurrentSearch
+                    })
+            </th>
+
+            <th>City</th>
+
+            <th>Created Date</th>
+
+            <th width="230">Action</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.Id</td>
+
+                    <td>@item.Name</td>
+
+                    <td>@item.Department</td>
+
+                    <td>@item.Salary</td>
+
+                    <td>@item.City</td>
+
+                    <td>
+                        @(String.Format("{0:dd-MMM-yyyy}", item.CreatedDate))
+                    </td>
+
+                    <td>
+
+                        @Html.ActionLink("Edit",
+                            "Edit",
+                            new { id = item.Id },
+                            new { @class = "btn btn-warning btn-sm" })
+
+                        @Html.ActionLink("Details",
+                            "Details",
+                            new { id = item.Id },
+                            new { @class = "btn btn-info btn-sm" })
+
+                        @Html.ActionLink("Delete",
+                            "Delete",
+                            new { id = item.Id },
+                            new { @class = "btn btn-danger btn-sm" })
+
+                    </td>
+
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+
+                <td colspan="7"
+                    class="text-center text-danger">
+
+                    No Employee Found
+
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+<div class="text-center">
+
+    @Html.PagedListPager(
+        Model,
+        page => Url.Action("Index",
+        new
+        {
+            page,
+            search = ViewBag.CurrentSearch,
+            sortOrder = Request["sortOrder"]
+        })
+    )
+
+</div>

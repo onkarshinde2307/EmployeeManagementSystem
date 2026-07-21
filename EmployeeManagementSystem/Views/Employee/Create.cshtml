@@ -1,0 +1,86 @@
+﻿@model EmployeeManagementSystem.Models.Employee
+
+@{
+    ViewBag.Title = "Create Employee";
+}
+
+<h2>Create Employee</h2>
+
+<hr />
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label class="form-label"><b>Employee Name</b></label>
+
+        @Html.TextBoxFor(x => x.Name,
+            new
+            {
+                @class = "form-control",
+                placeholder = "Enter Employee Name"
+            })
+
+        @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label"><b>Department</b></label>
+
+        @Html.TextBoxFor(x => x.Department,
+            new
+            {
+                @class = "form-control",
+                placeholder = "Enter Department"
+            })
+
+        @Html.ValidationMessageFor(x => x.Department, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label"><b>Salary</b></label>
+
+        @Html.TextBoxFor(x => x.Salary,
+            new
+            {
+                @class = "form-control",
+                type = "number",
+                placeholder = "Enter Salary"
+            })
+
+        @Html.ValidationMessageFor(x => x.Salary, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label"><b>City</b></label>
+
+        @Html.TextBoxFor(x => x.City,
+            new
+            {
+                @class = "form-control",
+                placeholder = "Enter City"
+            })
+
+        @Html.ValidationMessageFor(x => x.City, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        Save Employee
+    </button>
+
+    @Html.ActionLink("Back To List", "Index", null,
+        new { @class = "btn btn-secondary ms-2" })
+}
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}
